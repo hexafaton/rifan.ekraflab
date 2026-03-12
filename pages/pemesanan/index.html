@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman Form</title>
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="/style/reset.css" />
+    <link rel="stylesheet" href="/style/main.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <p class="toplogo">buket.ae</p>
+        <button class="hamburger" aria-label="Menu">&#9776;</button>
+      </div>
+      <nav>
+        <a href="/">Utama</a>
+        <a href="/pages/koleksi/">Koleksi</a>
+        <a href="/pages/pemesanan/">Pemesanan</a>
+        <a href="/pages/kontak/">Kontak</a>
+      </nav>
+    </header>>
+    <main>
+      <div id="menuModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeMenu()">&times;</span>
+
+          <section class="menu">
+            <h2>Daftar Harga Buket</h2>
+
+            <div class="menu-grid" id="modalProductList"></div>
+
+          </section>
+        </div>
+      </div>
+
+
+      <fieldset>
+        <legend>Form Pemesanan</legend>
+        <form action="/action" method="post" onsubmit="handleSubmit(event)">
+          <div>
+            <label for="nama">Nama Lengkap:</label>
+            <input type="text" id="nama" name="nama" />
+          </div>
+          <br />
+          <div>
+            <label for="nomor">Nomor Wa</label>
+            <input type="number" id="nomor" name="nomor" />
+          </div>
+          <br />
+          <div>
+            <input type="hidden" name="produk" id="produk" />
+            <input type="text" id="productInput" readonly placeholder="Klik untuk pilih produk" class="selected-product" onclick="openMenu()" />
+          </div>
+          <br />
+          <div>
+            <label for="jumlah">Jumlah Pesanan:</label>
+            <input type="number" id="jumlah" name="jumlah" />
+          </div>
+          <br />
+          <input type="submit" value="Pesan Sekarang" />
+        </form>
+      </fieldset>
+    </main>
+</br>
+<hr>
+    <footer>
+      <p>Bunga Segar, Hati Bahagia, Momen Berkesan! 🌹</p>
+      <ul>
+        <li>
+          <a href="https://wa.me/6282337445657">📞 Hubungi Kami di WhatsApp</a>
+        </li>
+        <li>
+          <a href="/pages/kontak/">✉️ Kirim Pesan</a>
+        </li>
+      </ul>
+      <p>Copyright &copy;  2026 buket.ae</p>
+    </footer>
+  </body>
+</html>

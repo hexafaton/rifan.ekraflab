@@ -1,0 +1,14 @@
+.article-buttons a {
+  display: inline-block;
+  padding: 12px 15px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.article-buttons a:hover {
+  background-color: var(--add-color);
+  color: white;
+}

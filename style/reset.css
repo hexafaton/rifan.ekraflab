@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img{
+    display: block;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}

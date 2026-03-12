@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halaman Kontak</title>
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="/style/main.css" />
+    <link rel="stylesheet" href="/style/reset.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <p class="toplogo">buket.ae</p>
+        <button class="hamburger" aria-label="Menu">&#9776;</button>
+      </div>
+      <nav>
+        <a href="/">Utama</a>
+        <a href="/pages/koleksi/">Koleksi</a>
+        <a href="/pages/pemesanan/">Pemesanan</a>
+        <a href="/pages/kontak/">Kontak</a>
+      </nav>
+    </header>
+    <main class="thx">
+      <p>
+        Terima kasih telah menghubungi kami. Silakan gunakan formulir di bawah
+        ini untuk mengirim pesan atau hubungi kami melalui informasi berikut.
+        Jika Anda suka jajan atau memiliki rekomendasi makanan, kami sangat
+        ingin mendengarnya!
+      </p>
+      <!-- <ul>
+            <li>Email: <a href="mailto:info@example.com">info@example.com</a></li>
+            <li>Telepon: +62 823 3744 5657</li>
+            <li>Alamat: Jalan Contoh No. 123, Kota, Negara</li>
+        </ul> -->
+      <!-- <h2>Formulir Kontak</h2> -->
+      <form action="/action" method="post" onsubmit="handleKontakSubmit(event)">
+        <label for="name">Nama:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" required /><br /><br />
+        <label for="message">Pesan:</label><br />
+        <textarea id="message" name="message" rows="5" required></textarea
+        ><br /><br />
+        <button type="submit">Kirim</button>
+      </form>
+    </main>
+    <hr />
+    <footer>
+      <p>Bunga Segar, Hati Bahagia, Momen Berkesan! 🌹</p>
+      <ul>
+        <li>
+          <a href="https://wa.me/6282337445657">📞 Hubungi Kami di WhatsApp</a>
+        </li>
+        <li>
+          <a href="/pages/kontak/">✉️ Kirim Pesan</a>
+        </li>
+      </ul>
+      <p>Copyright &copy; 2026 buket.ae</p>
+    </footer>
+  </body>
+</html>
