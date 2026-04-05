@@ -14,7 +14,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.6;
-  padding-top: 100px;
+  padding-top: 130px;
 }
 
 h1,
@@ -24,18 +24,9 @@ h3 {
   font-weight: 700;
 }
 
-p.toplogo {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  font-size: 2.5rem;
-}
-
-/* header style */
+/* ===== HEADER STYLE ===== */
 header {
   background-color: var(--primary-color);
-  color: var(--text-color);
-  padding: 0px 0;
-  text-align: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -43,34 +34,118 @@ header {
   z-index: 1000;
 }
 
-header .logo {
-  size-adjust: initial;
-  height: 80px;
-  display: block;
-  margin: 0 auto;
+/* ===== HEADER TOP BAR ===== */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 6px 30px;
+  font-size: 12px;
 }
 
-/*nav style*/
-nav {
-  padding: 10px;
-  background-color: var(--secondary-color);
-  margin-top: 12px;
-  margin-bottom: 0;
+.header-left {
+  display: flex;
+  gap: 20px;
 }
-nav a {
-  font-family: "Poppins", sans-serif;
+
+.header-left span {
   color: var(--text-color);
-  text-decoration: none;
-  margin: 0 15px;
+  font-size: 12px;
 }
 
-/* hamburger button (hidden by default) */
+.header-right a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 12px;
+  transition: color 0.3s;
+}
+
+.header-right a:hover {
+  color: var(--add-color);
+}
+
+/* ===== HEADER INNER ===== */
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: var(--primary-color);
+}
+
+/* Contact info di kiri */
+.contact-info {
+  display: flex;
+  gap: 20px;
+  width: 33%;
+}
+
+.contact-info span {
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+/* Logo di tengah */
+.toplogo {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--text-color);
+  text-align: center;
+  width: 34%;
+}
+
+/* Icons di kanan */
+.header-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: flex-end;
+  width: 33%;
+}
+
+.header-icons span {
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.header-icons span:hover {
+  color: var(--add-color);
+}
+
+/* ===== HAMBURGER ===== */
 .hamburger {
   display: none;
   font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--text-color);
+}
+
+/* ===== NAV MENU ===== */
+nav {
+  padding: 10px;
+  background-color: var(--secondary-color);
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+nav a {
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  text-decoration: none;
+  margin: 0 15px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: white;
 }
 
 /* main style */
@@ -175,8 +250,6 @@ section {
   color: var(--text-color);
 }
 
-
-
 /* Features Section */
 .features {
   padding: 30px;
@@ -265,14 +338,14 @@ form button[type="submit"]:hover {
   background-color: #d86cb2;
 }
 
-.thx{
-    max-width: 500px;
-    text-align: justify; 
-    margin: 40px auto;
-    padding-top: 0;
-  }
+.thx {
+  max-width: 500px;
+  text-align: justify;
+  margin: 40px auto;
+  padding-top: 0;
+}
 
-/* FOOTER style*/
+/* FOOTER style */
 footer {
   background-color: var(--primary-color);
   color: var(--text-color);
@@ -299,96 +372,6 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-/* responsive design smartphone */
-@media (max-width: 500px) {
-  body {
-    padding-top: 0;
-  }
-
-  /* header style */
-  header {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    padding: 0 10px;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .toplogo {
-    margin-left: 10px;
-    font-size: 1.2rem;
-  }
-
-  .hero {
-    margin-top: 50px;
-  }
-
-  .hero-logo {
-    width: 98px;
-    margin-bottom: 30px auto;
-    left: 50%;
-    transform: translate(-50%, -10%);
-  }
-  .hamburger {
-    display: block;
-    font-size: 28px;
-    padding-right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-color);
-    margin-left: auto;
-  }
-
-  /*nav style*/
-  nav {
-    display: none;
-    flex-direction: column;
-    padding: 10px;
-    background-color: var(--secondary-color);
-    margin-top: 0;
-    margin-bottom: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-  }
-  nav.active {
-    display: flex;
-  }
-  nav a {
-    font-family: "Poppins", sans-serif;
-    color: var(--text-color);
-    text-decoration: none;
-    margin: 10px 0;
-  }
-  .menu{
-    padding-top: 50px;
-  }
-  
-  /* kontak style */
-  .thx{
-    padding-top: 50px;
-    text-align: justify; 
-    margin: 10px 20px;
-    margin-bottom: 10px;
-  }
 }
 
 /* Menu Grid Styles */
@@ -447,7 +430,6 @@ footer a:hover {
   font-weight: 600;
   font-size: 1.1rem;
 }
-
 
 /* Modal Styles */
 .modal {
@@ -513,6 +495,7 @@ footer a:hover {
 .modal-content button:hover {
   background-color: #d6277d;
 }
+
 .selected-product {
   display: inline-block;
   margin-top: 5px;
@@ -524,4 +507,107 @@ footer a:hover {
   cursor: pointer;
 }
 
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 900px) {
+  .contact-info span {
+    font-size: 10px;
+    gap: 10px;
+  }
+  
+  .header-icons {
+    gap: 12px;
+  }
+  
+  .toplogo {
+    font-size: 1.8rem;
+  }
+}
 
+@media (max-width: 700px) {
+  .contact-info {
+    display: none;
+  }
+  
+  .header-icons {
+    display: none;
+  }
+  
+  .hamburger {
+    display: block;
+  }
+  
+  .header-inner {
+    justify-content: center;
+    position: relative;
+  }
+  
+  .toplogo {
+    width: auto;
+    font-size: 1.5rem;
+  }
+  
+  .hamburger {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    padding-top: 100px;
+  }
+
+  .header-top {
+    display: none;
+  }
+
+  .header-inner {
+    padding: 10px 15px;
+  }
+
+  .toplogo {
+    font-size: 1.3rem;
+  }
+
+  nav {
+    display: none;
+  }
+  
+  nav.active {
+    display: block;
+  }
+  
+  nav a {
+    display: block;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .hero {
+    margin-top: 0;
+  }
+
+  .hero-logo {
+    width: 80px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+  
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .menu {
+    padding-top: 20px;
+  }
+
+  .thx {
+    padding-top: 30px;
+    margin: 10px 20px;
+  }
+}

@@ -1,8 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.querySelector(".hamburger");
-  const nav = document.querySelector("nav");
-  hamburger.addEventListener("click", function () {
-    nav.classList.toggle("active");
+  const navMenu = document.querySelector(".nav-menu");
+
+  if (!hamburger || !navMenu) return;
+
+  hamburger.addEventListener("click", function (event) {
+    event.stopPropagation();
+    navMenu.classList.toggle("active");
+  });
+
+  // Tutup menu saat klik di luar
+  document.addEventListener("click", function(event) {
+    if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+      navMenu.classList.remove("active");
+    }
   });
 });
 
@@ -23,7 +34,7 @@ function selectFromCatalog(id, name, price) {
   selectedProductName = name;
   selectedProductPrice = price;
   const produkInput = document.getElementById("produk");
-  produkInput.value = id;
+  if (produkInput) produkInput.value = id;
   const textInput = document.getElementById("productInput");
   if (textInput) {
     textInput.value = name + " (" + price + ")";
@@ -34,7 +45,7 @@ function selectFromCatalog(id, name, price) {
 function handleSubmit(event) {
   event.preventDefault();
   const produkInput = document.getElementById("produk");
-  if (!produkInput.value) {
+  if (!produkInput || !produkInput.value) {
     alert("Silakan pilih produk terlebih dahulu.");
     return;
   }
@@ -83,21 +94,10 @@ const products = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  const hamburger = document.querySelector(".hamburger");
-  const nav = document.querySelector("nav");
-
-  if (hamburger) {
-    hamburger.addEventListener("click", function () {
-      nav.classList.toggle("active");
-    });
-  }
-
   // katalog halaman koleksi
   const menuGrid = document.getElementById("koleksibuket");
 
   if (menuGrid) {
-
     products.forEach((product) => {
       const article = document.createElement("article");
       article.classList.add("menu-item");
@@ -113,16 +113,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       menuGrid.appendChild(article);
     });
-
   }
 
   // katalog di modal
   const modalList = document.getElementById("modalProductList");
 
   if (modalList) {
-
     products.forEach(product => {
-
       const article = document.createElement("article");
       article.classList.add("menu-item");
 
@@ -137,9 +134,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       modalList.appendChild(article);
-
     });
-
   }
-
 });
