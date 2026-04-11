@@ -340,6 +340,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  const headerSearchWrapper = document.querySelector(".header-icons .search-wrapper");
+  const mobileSearchRow = document.querySelector(".search-row");
+
+  function updateSearchPosition() {
+    if (!headerSearchWrapper || !mobileSearchRow) return;
+    const headerIcons = document.querySelector(".header-icons");
+
+    if (window.innerWidth <= 500) {
+      if (!mobileSearchRow.contains(headerSearchWrapper)) {
+        mobileSearchRow.appendChild(headerSearchWrapper);
+      }
+    } else {
+      if (headerIcons && !headerIcons.contains(headerSearchWrapper)) {
+        headerIcons.insertBefore(headerSearchWrapper, headerIcons.firstChild);
+      }
+    }
+  }
+
+  updateSearchPosition();
+  window.addEventListener("resize", updateSearchPosition);
+
   const searchToggle = document.querySelector(".search-toggle");
   const searchInput = document.getElementById("searchInput");
   const searchWrapper = document.querySelector(".search-wrapper");
