@@ -115,7 +115,40 @@ function addToCart(productId) {
   }
   saveCart(cart);
   updateCartBadge();
-  alert(`${product.name} telah ditambahkan ke keranjang!`);
+  showNotification(`${product.name} telah ditambahkan ke keranjang!`, "success");
+}
+
+function showNotification(message, type = "success") {
+  let container = document.getElementById("notificationContainer");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "notificationContainer";
+    container.className = "notification-container";
+    document.body.appendChild(container);
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `notification-toast ${type}`;
+  toast.innerHTML = `
+    <div class="notification-body">
+      <span class="notification-text">${message}</span>
+      <button type="button" class="notification-close" aria-label="Tutup notifikasi">&times;</button>
+    </div>
+  `;
+
+  const closeButton = toast.querySelector(".notification-close");
+  closeButton.addEventListener("click", () => {
+    toast.classList.remove("visible");
+    setTimeout(() => toast.remove(), 250);
+  });
+
+  container.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add("visible"));
+
+  setTimeout(() => {
+    toast.classList.remove("visible");
+    setTimeout(() => toast.remove(), 250);
+  }, 3800);
 }
 
 function updateCartBadge() {
@@ -128,30 +161,25 @@ function updateCartBadge() {
   });
 }
 
-function showCartModal() {
-  const cart = getCart();
-  if (cart.length === 0) {
-    alert("Keranjang kosong!");
-    return;
-  }
-
+function buildCartContent(cart) {
   let total = 0;
   const itemsHtml = cart.map(item => {
     const itemTotal = parseInt(item.price.replace(/[^\d]/g, "")) * item.quantity;
     total += itemTotal;
     return `
-      <div class="cart-item">
+      <div class="cart-item" data-id="${item.id}">
         <img src="${item.image}" alt="${item.name}" />
         <div class="cart-item-details">
           <h4>${item.name}</h4>
           <p>${item.quantity} x ${item.price}</p>
+          <button type="button" class="remove-button" onclick="removeCartItem(${item.id})">Hapus</button>
         </div>
         <span class="item-total">Rp${itemTotal.toLocaleString()}</span>
       </div>
     `;
   }).join("");
 
-  const modalContent = `
+  return `
     <div class="cart-header">
       <div>
         <p class="cart-title">Keranjang Belanja</p>
@@ -168,6 +196,30 @@ function showCartModal() {
     </div>
     <button class="cart-checkout" onclick="checkout()">Checkout</button>
   `;
+}
+
+function renderCartContent() {
+  const panel = document.getElementById("cartPanel");
+  if (!panel) return;
+  const cart = getCart();
+  if (cart.length === 0) {
+    closeCartModal();
+    return;
+  }
+  panel.querySelector(".cart-content").innerHTML = buildCartContent(cart);
+}
+
+function showCartModal() {
+  const cart = getCart();
+  if (cart.length === 0) {
+    showNotification("Keranjang kosong. Tambahkan produk terlebih dahulu.", "warning");
+    return;
+  }
+
+  if (document.getElementById("cartPanel")) {
+    renderCartContent();
+    return;
+  }
 
   // Create overlay
   const overlay = document.createElement("div");
@@ -181,7 +233,7 @@ function showCartModal() {
   panel.className = "cart-panel";
   panel.innerHTML = `
     <div class="cart-content">
-      ${modalContent}
+      ${buildCartContent(cart)}
     </div>
   `;
 
@@ -192,6 +244,25 @@ function showCartModal() {
     panel.classList.add("active");
     overlay.classList.add("active");
   }, 10);
+}
+
+function removeCartItem(productId) {
+  const itemEl = document.querySelector(`.cart-item[data-id="${productId}"]`);
+  if (itemEl) {
+    itemEl.classList.add("removing");
+  }
+
+  setTimeout(() => {
+    const cart = getCart();
+    const updatedCart = cart.filter(item => item.id !== productId);
+    saveCart(updatedCart);
+    updateCartBadge();
+    if (updatedCart.length === 0) {
+      closeCartModal();
+    } else {
+      renderCartContent();
+    }
+  }, 250);
 }
 
 function closeCartModal() {
