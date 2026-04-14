@@ -372,7 +372,7 @@ function handlePaymentSubmit(event) {
 
   const totalAmount = parseInt(document.getElementById("orderTotal").value || "0", 10);
   const methodLabel = paymentMethod === "cash" ? "Cash" : "QRIS";
-  const sellerPhone = "6282337445657";
+  const sellerPhone = "6282241215992";
 
   const items = cart.map(item => `${item.quantity}x ${item.name} (${item.price})`).join("\n");
   let message = `Halo Buket AE, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
