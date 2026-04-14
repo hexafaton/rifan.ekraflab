@@ -56,33 +56,70 @@
         </div>
       </div>
 
+      <section class="checkout-header">
+        <div class="checkout-headline">
+          <h1>Konfirmasi Pesanan</h1>
+          <p>Silakan isi data pesanan Anda. Pilih metode pembayaran QRIS atau Cash, lalu kirim detail pesanan untuk diproses.</p>
+        </div>
+      </section>
 
-      <fieldset>
-        <legend>Form Pemesanan</legend>
-        <form action="/action" method="post" onsubmit="handleSubmit(event)">
-          <div>
-            <label for="nama">Nama Lengkap:</label>
-            <input type="text" id="nama" name="nama" />
-          </div>
-          <br />
-          <div>
-            <label for="nomor">Nomor Wa</label>
-            <input type="number" id="nomor" name="nomor" />
-          </div>
-          <br />
-          <div>
-            <input type="hidden" name="produk" id="produk" />
-            <input type="text" id="productInput" readonly placeholder="Klik untuk pilih produk" class="selected-product" onclick="openMenu()" />
-          </div>
-          <br />
-          <div>
-            <label for="jumlah">Jumlah Pesanan:</label>
-            <input type="number" id="jumlah" name="jumlah" />
-          </div>
-          <br />
-          <input type="submit" value="Pesan Sekarang" />
-        </form>
-      </fieldset>
+      <section class="checkout-page">
+        <aside class="checkout-summary">
+          <h2>Ringkasan Pesanan</h2>
+          <div id="checkoutSummary" class="checkout-summary-content"></div>
+        </aside>
+
+        <section class="payment-panel">
+          <h2>Detail Pesanan</h2>
+          <form id="paymentForm" onsubmit="handlePaymentSubmit(event)">
+            <div class="form-group">
+              <label for="customerName">Nama Lengkap</label>
+              <input type="text" id="customerName" name="customerName" required placeholder="Nama penerima" />
+            </div>
+            <div class="form-group">
+              <label for="customerPhone">Nomor Kontak</label>
+              <input type="tel" id="customerPhone" name="customerPhone" required placeholder="0812xxxxxxx" />
+            </div>
+            <div class="form-group">
+              <label for="customerAddress">Alamat Penerima</label>
+              <textarea id="customerAddress" name="customerAddress" required placeholder="Alamat lengkap pengiriman"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="orderNote">Catatan untuk Penjual</label>
+              <textarea id="orderNote" name="orderNote" placeholder="Tuliskan permintaan khusus jika ada"></textarea>
+            </div>
+            <input type="hidden" id="orderTotal" name="orderTotal" />
+
+            <div class="payment-methods">
+              <p>Pilih Metode</p>
+              <label class="payment-method">
+                <input type="radio" name="paymentMethod" value="qris" checked onclick="togglePaymentInfo('qris')" />
+                QRIS
+              </label>
+              <label class="payment-method">
+                <input type="radio" name="paymentMethod" value="cash" onclick="togglePaymentInfo('cash')" />
+                Cash
+              </label>
+            </div>
+
+            <div id="qrisInfo" class="payment-info">
+              <h3>QRIS</h3>
+              <p>Pembayaran QRIS akan diproses sesuai metode yang dipilih. Instruksi pembayaran akan diberikan setelah pengiriman pesanan.</p>
+              <p class="payment-amount">Total: <span id="paymentAmount">Rp0</span></p>
+            </div>
+
+            <div id="cashInfo" class="payment-info hidden">
+              <h3>Cash</h3>
+              <p>Bayar tunai saat pesanan sampai. Pastikan alamat dan detail pesanan sudah benar.</p>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-pesan">Kirim Pesanan</button>
+              <a href="/" class="button-secondary">Kembali Belanja</a>
+            </div>
+          </form>
+        </section>
+      </section>
     </main>
 </br>
 <hr>

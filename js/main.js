@@ -279,10 +279,113 @@ function closeCartModal() {
 }
 
 function checkout() {
-  alert("Terima kasih! Pesanan Anda akan diproses.");
+  const cart = getCart();
+  if (cart.length === 0) {
+    showNotification("Keranjang kosong. Tambahkan produk terlebih dahulu.", "warning");
+    return;
+  }
+  window.location.href = "/pages/pemesanan/";
+}
+
+function togglePaymentInfo(method) {
+  const qrisInfo = document.getElementById("qrisInfo");
+  const cashInfo = document.getElementById("cashInfo");
+  if (!qrisInfo || !cashInfo) return;
+
+  if (method === "cash") {
+    qrisInfo.classList.add("hidden");
+    cashInfo.classList.remove("hidden");
+  } else {
+    qrisInfo.classList.remove("hidden");
+    cashInfo.classList.add("hidden");
+  }
+}
+
+function renderPaymentPage() {
+  const checkoutSummary = document.getElementById("checkoutSummary");
+  const paymentForm = document.getElementById("paymentForm");
+  const paymentAmount = document.getElementById("paymentAmount");
+  const orderTotal = document.getElementById("orderTotal");
+
+  if (!checkoutSummary || !paymentForm || !paymentAmount || !orderTotal) return;
+
+  const cart = getCart();
+  if (cart.length === 0) {
+    checkoutSummary.innerHTML = `<p class="empty-cart-message">Keranjang Anda kosong. <a href="/">Kembali belanja</a></p>`;
+    paymentForm.style.display = "none";
+    return;
+  }
+
+  const itemsHtml = cart.map(item => {
+    const priceValue = parseInt(item.price.replace(/[^\d]/g, "")) || 0;
+    const subtotal = priceValue * item.quantity;
+    return `
+      <div class="summary-item">
+        <img class="summary-thumb" src="${item.image}" alt="${item.name}" />
+        <div class="summary-item-left">
+          <strong>${item.name}</strong>
+          <span>${item.quantity} x ${item.price}</span>
+        </div>
+        <div class="summary-item-right">Rp${subtotal.toLocaleString()}</div>
+      </div>
+    `;
+  }).join("");
+
+  const totalAmount = cart.reduce((sum, item) => {
+    const priceValue = parseInt(item.price.replace(/[^\d]/g, "")) || 0;
+    return sum + priceValue * item.quantity;
+  }, 0);
+
+  checkoutSummary.innerHTML = `
+    <div class="summary-list">${itemsHtml}</div>
+    <div class="summary-total">
+      <span>Total Pesanan</span>
+      <strong>Rp${totalAmount.toLocaleString()}</strong>
+    </div>
+  `;
+
+  paymentAmount.textContent = `Rp${totalAmount.toLocaleString()}`;
+  orderTotal.value = totalAmount;
+  paymentForm.style.display = "block";
+}
+
+function handlePaymentSubmit(event) {
+  event.preventDefault();
+
+  const cart = getCart();
+  if (cart.length === 0) {
+    alert("Keranjang kosong. Tambahkan produk terlebih dahulu.");
+    window.location.href = "/";
+    return;
+  }
+
+  const customerName = document.getElementById("customerName").value.trim();
+  const customerPhone = document.getElementById("customerPhone").value.trim();
+  const customerAddress = document.getElementById("customerAddress").value.trim();
+  const orderNote = document.getElementById("orderNote").value.trim();
+  const paymentMethod = document.querySelector("input[name='paymentMethod']:checked").value;
+
+  if (!customerName || !customerPhone || !customerAddress) {
+    alert("Silakan lengkapi semua data pelanggan sebelum melanjutkan.");
+    return;
+  }
+
+  const totalAmount = parseInt(document.getElementById("orderTotal").value || "0", 10);
+  const methodLabel = paymentMethod === "cash" ? "Cash" : "QRIS";
+  const sellerPhone = "6282337445657";
+
+  const items = cart.map(item => `${item.quantity}x ${item.name} (${item.price})`).join("\n");
+  let message = `Halo Buket AE, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
+  if (orderNote) {
+    message += `\nCatatan: ${orderNote}`;
+  }
+
+  const encoded = encodeURIComponent(message);
+  const waUrl = `https://wa.me/${sellerPhone}?text=${encoded}`;
+
   localStorage.removeItem("cart");
   updateCartBadge();
-  closeCartModal();
+  window.location.href = waUrl;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -434,4 +537,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Update cart badge on load
   updateCartBadge();
+  renderPaymentPage();
 });
