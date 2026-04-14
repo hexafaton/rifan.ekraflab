@@ -375,7 +375,7 @@ function handlePaymentSubmit(event) {
   const sellerPhone = "6282241215992";
 
   const items = cart.map(item => `${item.quantity}x ${item.name} (${item.price})`).join("\n");
-  let message = `Halo Buket AE, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
+  let message = `Halo Buket.ae, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
   if (orderNote) {
     message += `\nCatatan: ${orderNote}`;
   }
