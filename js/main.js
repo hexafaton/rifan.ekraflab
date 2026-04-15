@@ -129,35 +129,56 @@ const products = [
     name: "Fresh Flower Buket",
     price: "Rp120.000",
     image: "/public/product/buket-fresh-flower.webp",
-    description: "Buket segar dengan perpaduan bunga pilihan, ideal untuk hadiah ulang tahun, anniversary, atau momen istimewa.",
+    description: "Buket bunga segar dengan kombinasi warna lembut, sempurna untuk memberikan kesan manis dan elegan.",
   },
   {
     id: 2,
     name: "Buket Kawat Bulu",
-    price: "Rp100.000",
+    price: "Rp110.655",
     image: "/public/buketdis.jpeg",
-    description: "Buket unik berisi kawat dan bulu sintetis yang cantik, cocok untuk dekorasi modern dan kado spesial.",
+    description: "Buket kreatif dengan aksen kawat dan bulu, memberikan tampilan modern dan berbeda untuk hadiah spesial.",
   },
   {
     id: 3,
     name: "Bunga Satin Coklat",
-    price: "Rp100.000",
+    price: "Rp100.900",
     image: "/public/product/buket-bunga-satin-coklat.webp",
-    description: "Buket elegan dengan bunga satin coklat yang mewah, pilihan tepat untuk suasana romantis.",
+    description: "Buket bunga satin coklat yang mewah dan elegan, cocok untuk ungkapan kasih sayang dan suasana romantis.",
   },
   {
     id: 4,
     name: "Buket Uang",
-    price: "Rp200.000",
+    price: "Rp200.150",
     image: "/public/product/buket-uang.webp",
-    description: "Buket kreatif berisi uang kertas, cocok untuk hadiah ulang tahun, wisuda, dan acara perayaan lainnya.",
+    description: "Buket hadiah berisi uang kertas, pilihan praktis dan unik untuk ulang tahun, wisuda, atau perayaan lain.",
   },
   {
     id: 5,
-    name: "Buket Uang",
-    price: "Rp200.000",
-    image: "/public/product/buket-uang.webp",
-    description: "Buket uang dengan tampilan mewah dan praktis, sempurna untuk memberikan kejutan sekaligus kado berguna.",
+    name: "Buket Bunga Uang Fresh Flower Mawar",
+    price: "Rp220.750",
+    image: "/public/product/buketbungauang.jpeg",
+    description: "Perpaduan bunga cantik dan uang kertas dalam satu buket, memberi kesan mewah sekaligus berguna.<br> <b>Note : Jumlah uang dapat disesuaikan sesuai permintaan pelanggan dan harga belum termasuk uang asli</b>",
+  },
+  {
+    id: 6,
+    name: "Buket Bunga Uang Premium Tosca",
+    price: "Rp225.000",
+    image: "/public/product/buketbungauang2.jpeg",
+    description: "Varian buket bunga uang dengan desain premium untuk hadiah eksklusif dan penuh kejutan. <br><b>Note : Jumlah uang dapat disesuaikan sesuai permintaan pelanggan dan harga belum termasuk uang asli</b>",
+  },
+  {
+    id: 7,
+    name: "Buket Satin Shoft Pink & Putih",
+    price: "Rp110.900",
+    image: "/public/product/buketsatin.png",
+    description: "Buket satin dengan tampilan anggun dan lembut, ideal untuk ucapan romantis atau hadiah istimewa.",
+  },
+  {
+    id: 8,
+    name: "Buket Snack",
+    price: "Rp95.800",
+    image: "/public/product/buketsnack.png",
+    description: "Buket kombinasi snack dan dekorasi manis, sempurna untuk hadiah ulang tahun atau ucapan selamat.<br><b>Note : Isi snack dapat disesuaikan sesuai permintaan pelanggan dan harga sudahtermasuk snack</b>",
   },
 ];
 
@@ -431,6 +452,7 @@ function handlePaymentSubmit(event) {
   const customerPhone = document.getElementById("customerPhone").value.trim();
   const customerAddress = document.getElementById("customerAddress").value.trim();
   const orderNote = document.getElementById("orderNote").value.trim();
+  const voucherCode = document.getElementById("voucherCode").value.trim();
   const paymentMethod = document.querySelector("input[name='paymentMethod']:checked").value;
 
   if (!customerName || !customerPhone || !customerAddress) {
@@ -444,6 +466,9 @@ function handlePaymentSubmit(event) {
 
   const items = cart.map(item => `${item.quantity}x ${item.name} (${item.price})`).join("\n");
   let message = `Halo Buket.ae, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
+  if (voucherCode) {
+    message += `\nVoucher: ${voucherCode}`;
+  }
   if (orderNote) {
     message += `\nCatatan: ${orderNote}`;
   }
