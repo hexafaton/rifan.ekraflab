@@ -121,7 +121,7 @@ function orderProductNow(productId) {
   updateCartBadge();
   
   closeProductDetail();
-  window.location.href = "/pages/pemesanan/";
+  window.location.href = "/pemesanan";
 }
 
 const products = [
@@ -129,56 +129,56 @@ const products = [
     id: 1,
     name: "Fresh Flower Buket",
     price: "Rp120.000",
-    image: "/public/product/buket-fresh-flower.webp",
+    image: "/product/buket-fresh-flower.webp",
     description: "Buket bunga segar dengan kombinasi warna lembut, sempurna untuk memberikan kesan manis dan elegan.",
   },
   {
     id: 2,
     name: "Buket Kawat Bulu",
     price: "Rp110.655",
-    image: "/public/buketdis.jpeg",
+    image: "/buketdis.jpeg",
     description: "Buket kreatif dengan aksen kawat dan bulu, memberikan tampilan modern dan berbeda untuk hadiah spesial.",
   },
   {
     id: 3,
     name: "Bunga Satin Coklat",
     price: "Rp100.900",
-    image: "/public/product/buket-bunga-satin-coklat.webp",
+    image: "/product/buket-bunga-satin-coklat.webp",
     description: "Buket bunga satin coklat yang mewah dan elegan, cocok untuk ungkapan kasih sayang dan suasana romantis.",
   },
   {
     id: 4,
     name: "Buket Uang",
     price: "Rp200.150",
-    image: "/public/product/buket-uang.webp",
+    image: "/product/buket-uang.webp",
     description: "Buket hadiah berisi uang kertas, pilihan praktis dan unik untuk ulang tahun, wisuda, atau perayaan lain.",
   },
   {
     id: 5,
     name: "Buket Bunga Uang Fresh Flower Mawar",
     price: "Rp220.750",
-    image: "/public/product/buketbungauang.jpeg",
+    image: "/product/buketbungauang.jpeg",
     description: "Perpaduan bunga cantik dan uang kertas dalam satu buket, memberi kesan mewah sekaligus berguna.<br> <b>Note : Jumlah uang dapat disesuaikan sesuai permintaan pelanggan dan harga belum termasuk uang asli</b>",
   },
   {
     id: 6,
     name: "Buket Bunga Uang Premium Tosca",
     price: "Rp225.000",
-    image: "/public/product/buketbungauang2.jpeg",
+    image: "/product/buketbungauang2.jpeg",
     description: "Varian buket bunga uang dengan desain premium untuk hadiah eksklusif dan penuh kejutan. <br><b>Note : Jumlah uang dapat disesuaikan sesuai permintaan pelanggan dan harga belum termasuk uang asli</b>",
   },
   {
     id: 7,
     name: "Buket Satin Shoft Pink & Putih",
     price: "Rp110.900",
-    image: "/public/product/buketsatin.png",
+    image: "/product/buketsatin.png",
     description: "Buket satin dengan tampilan anggun dan lembut, ideal untuk ucapan romantis atau hadiah istimewa.",
   },
   {
     id: 8,
     name: "Buket Snack",
     price: "Rp95.800",
-    image: "/public/product/buketsnack.png",
+    image: "/product/buketsnack.png",
     description: "Buket kombinasi snack dan dekorasi manis, sempurna untuk hadiah ulang tahun atau ucapan selamat.<br><b>Note : Isi snack dapat disesuaikan sesuai permintaan pelanggan dan harga sudahtermasuk snack</b>",
   },
 ];
@@ -374,7 +374,7 @@ function checkout() {
     showNotification("Keranjang kosong. Tambahkan produk terlebih dahulu.", "warning");
     return;
   }
-  window.location.href = "/pages/pemesanan/";
+  window.location.href = "/pemesanan";
 }
 
 function togglePaymentInfo(method) {
@@ -699,7 +699,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           // Redirect setelah 2 detik
           setTimeout(() => {
-            window.location.href = "/pages/koleksi/";
+            window.location.href = "/koleksi";
           }, 2000);
         } else {
           alert(`Maaf, produk dengan kata "${query}" tidak ditemukan.`);
