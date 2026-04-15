@@ -1415,6 +1415,19 @@ footer a:hover {
     font-size: 1rem;
   }
 
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .menu-item {
+    padding: 10px;
+  }
+
+  .menu-item h3 {
+    font-size: 0.95rem;
+  }
+
   .thx {
     padding-top: 30px;
     margin: 10px 20px;
