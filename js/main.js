@@ -85,6 +85,13 @@ function showProductDetail(productId) {
         <h2>${product.name}</h2>
         <p class="product-detail-price">${product.price}</p>
         <p class="product-detail-description">${product.description || "Deskripsi produk tidak tersedia."}</p>
+        
+        <div class="product-action-buttons">
+          <button type="button" class="btn-cart-detail" title="Tambah ke Keranjang" onclick="addProductDetailToCart(${productId})">
+            <i class="bi bi-cart-plus"></i>
+          </button>
+          <button type="button" class="btn-order-detail" onclick="orderProductNow(${productId})">Pesan Sekarang</button>
+        </div>
       </div>
     </div>
   `;
@@ -97,6 +104,23 @@ function closeProductDetail() {
   if (modal) {
     modal.style.display = "none";
   }
+}
+
+function addProductDetailToCart(productId) {
+  addToCart(productId);
+}
+
+function orderProductNow(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  
+  // Clear cart and add only this product
+  const newCart = [{ ...product, quantity: 1 }];
+  saveCart(newCart);
+  updateCartBadge();
+  
+  closeProductDetail();
+  window.location.href = "/pages/pemesanan/";
 }
 
 const products = [
