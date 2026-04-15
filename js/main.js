@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 let selectedProductId = "";
 let selectedProductName = "";
 let selectedProductPrice = "";
+let voucherPreviouslyValid = false;
 
 function openMenu() {
   document.getElementById("menuModal").style.display = "block";
@@ -390,11 +391,31 @@ function togglePaymentInfo(method) {
   }
 }
 
+function getVoucherDiscount(total, code) {
+  const trimmed = code.trim().toUpperCase();
+  const voucher = "OPENING26";
+  const discountRate = 0.10;
+  if (trimmed === voucher) {
+    const discountAmount = Math.round(total * discountRate);
+    return {
+      valid: true,
+      discountAmount,
+      discountedTotal: total - discountAmount,
+    };
+  }
+  return {
+    valid: false,
+    discountAmount: 0,
+    discountedTotal: total,
+  };
+}
+
 function renderPaymentPage() {
   const checkoutSummary = document.getElementById("checkoutSummary");
   const paymentForm = document.getElementById("paymentForm");
   const paymentAmount = document.getElementById("paymentAmount");
   const orderTotal = document.getElementById("orderTotal");
+  const voucherCodeInput = document.getElementById("voucherCode");
 
   if (!checkoutSummary || !paymentForm || !paymentAmount || !orderTotal) return;
 
@@ -403,6 +424,21 @@ function renderPaymentPage() {
     checkoutSummary.innerHTML = `<p class="empty-cart-message">Keranjang Anda kosong. <a href="/">Kembali belanja</a></p>`;
     paymentForm.style.display = "none";
     return;
+  }
+
+  const voucherCode = voucherCodeInput ? voucherCodeInput.value.trim() : "";
+  const totalAmount = cart.reduce((sum, item) => {
+    const priceValue = parseInt(item.price.replace(/[^\d]/g, "")) || 0;
+    return sum + priceValue * item.quantity;
+  }, 0);
+  const voucherResult = getVoucherDiscount(totalAmount, voucherCode);
+
+  if (voucherResult.valid && !voucherPreviouslyValid) {
+    showNotification("Voucher OPENING26 digunakan. Diskon 10% berhasil diterapkan.", "success");
+    voucherPreviouslyValid = true;
+  }
+  if (!voucherResult.valid) {
+    voucherPreviouslyValid = false;
   }
 
   const itemsHtml = cart.map(item => {
@@ -420,21 +456,49 @@ function renderPaymentPage() {
     `;
   }).join("");
 
-  const totalAmount = cart.reduce((sum, item) => {
-    const priceValue = parseInt(item.price.replace(/[^\d]/g, "")) || 0;
-    return sum + priceValue * item.quantity;
-  }, 0);
-
   checkoutSummary.innerHTML = `
     <div class="summary-list">${itemsHtml}</div>
+    ${voucherResult.valid ? `
+      <div class="summary-voucher">
+        <div class="summary-voucher-left">
+          <span>Total sebelum diskon</span>
+          <strong class="summary-original">Rp${totalAmount.toLocaleString()}</strong>
+        </div>
+        <div class="summary-voucher-right">
+          <span>Diskon OPENING26</span>
+          <strong class="summary-discount-amount">-Rp${voucherResult.discountAmount.toLocaleString()}</strong>
+        </div>
+      </div>
+    ` : ""}
     <div class="summary-total">
       <span>Total Pesanan</span>
-      <strong>Rp${totalAmount.toLocaleString()}</strong>
+      <strong>Rp${voucherResult.discountedTotal.toLocaleString()}</strong>
     </div>
   `;
 
-  paymentAmount.textContent = `Rp${totalAmount.toLocaleString()}`;
-  orderTotal.value = totalAmount;
+  paymentAmount.textContent = `Rp${voucherResult.discountedTotal.toLocaleString()}`;
+  orderTotal.value = voucherResult.discountedTotal;
+
+  const voucherInfo = document.getElementById("voucherInfo");
+  if (voucherInfo) {
+    if (voucherResult.valid) {
+      voucherInfo.classList.remove("hidden");
+      voucherInfo.innerHTML = `
+        <div class="voucher-row">
+          <span>Harga sebelum diskon</span>
+          <strong class="voucher-original">Rp${totalAmount.toLocaleString()}</strong>
+        </div>
+        <div class="voucher-row">
+          <span>Diskon OPENING26</span>
+          <strong class="voucher-discount">-Rp${voucherResult.discountAmount.toLocaleString()}</strong>
+        </div>
+      `;
+    } else {
+      voucherInfo.classList.add("hidden");
+      voucherInfo.innerHTML = "";
+    }
+  }
+
   paymentForm.style.display = "block";
 }
 
@@ -460,7 +524,12 @@ function handlePaymentSubmit(event) {
     return;
   }
 
-  const totalAmount = parseInt(document.getElementById("orderTotal").value || "0", 10);
+  const originalTotal = cart.reduce((sum, item) => {
+    const priceValue = parseInt(item.price.replace(/[^\d]/g, "")) || 0;
+    return sum + priceValue * item.quantity;
+  }, 0);
+  const voucherResult = getVoucherDiscount(originalTotal, voucherCode);
+  const totalAmount = voucherResult.discountedTotal;
   const methodLabel = paymentMethod === "cash" ? "Cash" : "QRIS";
   const sellerPhone = "6282241215992";
 
@@ -468,6 +537,10 @@ function handlePaymentSubmit(event) {
   let message = `Halo Buket.ae, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
   if (voucherCode) {
     message += `\nVoucher: ${voucherCode}`;
+    if (voucherResult.valid) {
+      message += ` (diskon 10%)`;
+      message += `\nTotal setelah diskon: Rp${voucherResult.discountedTotal.toLocaleString()}`;
+    }
   }
   if (orderNote) {
     message += `\nCatatan: ${orderNote}`;
@@ -637,4 +710,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update cart badge on load
   updateCartBadge();
   renderPaymentPage();
+
+  const voucherCodeInput = document.getElementById("voucherCode");
+  if (voucherCodeInput) {
+    voucherCodeInput.addEventListener("input", renderPaymentPage);
+  }
 });
