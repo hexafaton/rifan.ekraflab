@@ -1166,22 +1166,25 @@ footer a:hover {
 /* Modal Styles */
 .modal {
   display: none;
-  position: relative;
-  z-index: 100;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   width: 100%;
-  background-color: transparent;
-  margin-top: 40px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  padding: 40px 16px;
+  overflow-y: auto;
 }
 
 .modal-content {
   background-color: #fefefe;
-  margin: 0 auto;
+  margin: 10vh auto;
   padding: 30px;
   border: 2px solid var(--add-color);
   border-radius: 10px;
   width: 95%;
   max-width: 800px;
-  max-height: 70vh;
+  max-height: 80vh;
   overflow-y: auto;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1388,6 +1391,28 @@ footer a:hover {
   .menu {
     margin-top: 0;
     padding-top: 0;
+  }
+
+  .modal {
+    padding: 20px 8px;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+    margin: 5vh auto;
+    max-height: 90vh;
+  }
+
+  .modal-content img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .modal-content p,
+  .modal-content h2 {
+    font-size: 1rem;
   }
 
   .thx {

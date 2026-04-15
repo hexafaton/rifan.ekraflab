@@ -61,10 +61,43 @@ function handleKontakSubmit(event) {
 
 window.onclick = function (event) {
   const menuModal = document.getElementById("menuModal");
+  const productDetailModal = document.getElementById("productDetailModal");
   if (event.target == menuModal) {
     menuModal.style.display = "none";
   }
+  if (productDetailModal && event.target == productDetailModal) {
+    productDetailModal.style.display = "none";
+  }
 };
+
+function showProductDetail(productId) {
+  const product = products.find((item) => item.id === productId);
+  if (!product) return;
+
+  const modal = document.getElementById("productDetailModal");
+  const content = document.getElementById("productDetailContent");
+  if (!modal || !content) return;
+
+  content.innerHTML = `
+    <div class="product-detail">
+      <img src="${product.image}" alt="${product.name}" />
+      <div class="product-detail-info">
+        <h2>${product.name}</h2>
+        <p class="product-detail-price">${product.price}</p>
+        <p class="product-detail-description">${product.description || "Deskripsi produk tidak tersedia."}</p>
+      </div>
+    </div>
+  `;
+
+  modal.style.display = "block";
+}
+
+function closeProductDetail() {
+  const modal = document.getElementById("productDetailModal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+}
 
 const products = [
   {
@@ -72,24 +105,35 @@ const products = [
     name: "Fresh Flower Buket",
     price: "Rp120.000",
     image: "/public/product/buket-fresh-flower.webp",
+    description: "Buket segar dengan perpaduan bunga pilihan, ideal untuk hadiah ulang tahun, anniversary, atau momen istimewa.",
   },
   {
     id: 2,
     name: "Buket Kawat Bulu",
-    price: "Rp150.000",
+    price: "Rp100.000",
     image: "/public/buketdis.jpeg",
+    description: "Buket unik berisi kawat dan bulu sintetis yang cantik, cocok untuk dekorasi modern dan kado spesial.",
   },
   {
     id: 3,
     name: "Bunga Satin Coklat",
-    price: "Rp180.000",
+    price: "Rp100.000",
     image: "/public/product/buket-bunga-satin-coklat.webp",
+    description: "Buket elegan dengan bunga satin coklat yang mewah, pilihan tepat untuk suasana romantis.",
   },
   {
     id: 4,
     name: "Buket Uang",
     price: "Rp200.000",
     image: "/public/product/buket-uang.webp",
+    description: "Buket kreatif berisi uang kertas, cocok untuk hadiah ulang tahun, wisuda, dan acara perayaan lainnya.",
+  },
+  {
+    id: 5,
+    name: "Buket Uang",
+    price: "Rp200.000",
+    image: "/public/product/buket-uang.webp",
+    description: "Buket uang dengan tampilan mewah dan praktis, sempurna untuk memberikan kejutan sekaligus kado berguna.",
   },
 ];
 
@@ -407,15 +451,21 @@ document.addEventListener("DOMContentLoaded", function () {
     filteredProducts.forEach((product) => {
       const article = document.createElement("article");
       article.classList.add("menu-item");
+      article.style.cursor = "pointer";
 
       article.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h3>${product.name}</h3>
+        <img src="${product.image}" alt="${product.name}" onclick="showProductDetail(${product.id})">
+        <h3 onclick="showProductDetail(${product.id})">${product.name}</h3>
         <p class="price">${product.price}</p>
         <div class="article-buttons">
           <button type="button" class="btn-pesan" onclick="addToCart(${product.id})">Pesan Sekarang</button>
         </div>
       `;
+
+      article.addEventListener("click", function (event) {
+        if (event.target.closest("button")) return;
+        showProductDetail(product.id);
+      });
 
       menuGrid.appendChild(article);
     });
