@@ -531,7 +531,7 @@ function handlePaymentSubmit(event) {
   const voucherResult = getVoucherDiscount(originalTotal, voucherCode);
   const totalAmount = voucherResult.discountedTotal;
   const methodLabel = paymentMethod === "cash" ? "Cash" : "QRIS";
-  const sellerPhone = "6282241215992";
+  const sellerPhone = "6282337445657";
 
   const items = cart.map(item => `${item.quantity}x ${item.name} (${item.price})`).join("\n");
   let message = `Halo Buket.ae, saya ingin memesan:\n${items}\n\nNama: ${customerName}\nWA: ${customerPhone}\nAlamat: ${customerAddress}\nMetode: ${methodLabel}\nTotal: Rp${totalAmount.toLocaleString()}`;
